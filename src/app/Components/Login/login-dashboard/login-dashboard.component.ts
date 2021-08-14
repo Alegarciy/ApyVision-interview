@@ -37,6 +37,7 @@ export class LoginDashboardComponent implements OnInit {
   }
 
   onLogin() {
+    console.log('User could not logged in 😪😪😪');
     this.showError();
   }
 
