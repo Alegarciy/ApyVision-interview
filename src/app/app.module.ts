@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -26,13 +27,16 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 /* Angular Forms */
 import { FormsModule } from '@angular/forms';
+import { PoolDashboardComponent } from './Components/Home/pool-dashboard/pool-dashboard.component';
 
 @NgModule({
-  declarations: [AppComponent, LoginDashboardComponent],
+  declarations: [AppComponent, LoginDashboardComponent, PoolDashboardComponent],
   imports: [
+    AppRoutingModule,
     BrowserModule,
     BrowserAnimationsModule,
-    AppRoutingModule,
+    FormsModule,
+    HttpClientModule,
     NgbModule,
     MatButtonModule,
     MatCardModule,
@@ -49,7 +53,6 @@ import { FormsModule } from '@angular/forms';
     MatExpansionModule,
     MatSelectModule,
     MatProgressSpinnerModule,
-    FormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
