@@ -84,7 +84,71 @@
           </button> -->
         </mat-tab>
 
-        <mat-tab label="Transactions"> </mat-tab>
+        <mat-tab label="Transactions">
+          <!-- Select Pool name -->
+          <mat-form-field appearance="fill">
+            <mat-label>Pool Type</mat-label>
+            <mat-select [(ngModel)]="selectedPool">
+              <mat-option
+                *ngFor="let pool of liquidityPoolArray"
+                [value]="pool"
+              >
+                {{ pool.name }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <!-- Pool Address -->
+          <mat-form-field class="example-full-width" style="margin-top: 3rem">
+            <mat-label>Pool Address</mat-label>
+            <input
+              disabled
+              matInput
+              value="{{ selectedPool.pool_address }}"
+              #message
+            />
+          </mat-form-field>
+          <!-- Pool Address -->
+          <mat-form-field class="example-full-width" style="margin-top: 3rem">
+            <mat-label>Conversion Rate</mat-label>
+            <input
+              disabled
+              matInput
+              value="{{ selectedPool.avg_lp_price }}"
+              #message
+            />
+          </mat-form-field>
+          <!-- Pool Address -->
+          <mat-form-field class="example-full-width" style="margin-top: 3rem">
+            <mat-label>Baseline Date</mat-label>
+            <input
+              disabled
+              matInput
+              value="{{ selectedPool.baseline_date }}"
+              #message
+            />
+          </mat-form-field>
+          <!-- USD to Crypto-->
+          <mat-form-field class="example-full-width" style="margin-top: 3rem">
+            <mat-label>USD to Crypto</mat-label>
+            <input
+              disabled
+              matInput
+              value="{{ this.investor.usd * selectedPool.avg_lp_price }}"
+              #message
+            />
+          </mat-form-field>
+          <!-- Commit Transaction -->
+          <button
+            mat-raised-button
+            style="width: 100%; margin-top: 0.5rem"
+            color="primary"
+            (click)="
+              confirmTransaction(selectedPool.avg_lp_price * this.investor.usd)
+            "
+          >
+            Confirm
+          </button>
+        </mat-tab>
       </mat-tab-group>
     </mat-card-content>
   </mat-card>

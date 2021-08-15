@@ -20,18 +20,24 @@ export class PoolDashboardComponent implements OnInit {
   public pool_address: string = 'No investment in pool yet...';
   /* Liquidity Pool Form */
   public liquidityPoolArray: LiquidityPool[] = [];
+  public selectedPool: LiquidityPool;
 
   constructor(
     private loginService: LoginService,
     private poolsService: PoolsService
   ) {
+    this.selectedPool = {
+      pool_address: '',
+      name: '',
+      avg_lp_price: 0,
+      baseline_date: '',
+    };
     this.investor = this.loginService.getLoggedInvestor();
-  }
-
-  ngOnInit(): void {
     this.initializeClientInformation();
     this.setLiquidityPools();
   }
+
+  ngOnInit(): void {}
 
   initializeClientInformation() {
     this.idField = this.investor.id;
@@ -44,16 +50,37 @@ export class PoolDashboardComponent implements OnInit {
 
   setLiquidityPools() {
     this.poolsService.getLiquidityPools().subscribe(
-      (res: LiquidityPool[]) => {
-        console.log(res);
-        if (res.length > 0) {
+      (res: any) => {
+        if (res.results.length > 0) {
           console.log('Loaded the Liquidity Pools 🥰🥰🥰');
-          this.liquidityPoolArray = res;
+          this.liquidityPoolArray = res.results;
+          this.selectedPool = this.liquidityPoolArray[0];
+          console.log(this.liquidityPoolArray);
         }
       },
       (err) => {
         console.log(err);
       }
     );
+  }
+
+  confirmTransaction(lp_amount: number) {
+    this.poolsService
+      .updateInvestorsWallet(
+        this.selectedPool.name,
+        this.selectedPool.pool_address,
+        lp_amount,
+        this.investor
+      )
+      .subscribe(
+        (res: any) => {
+          console.log('Committed the transaction 💸💸💸');
+          console.log(this.investor);
+          console.log(res);
+        },
+        (err) => {
+          console.log(err);
+        }
+      );
   }
 }
