@@ -1,0 +1,8 @@
+{
+  "/api/*": {
+    "target": "https://stats.apy.vision",
+    "secure": false,
+    "logLevel": "debug",
+    "changeOrigin": true
+  }
+}

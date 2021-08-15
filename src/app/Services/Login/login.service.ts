@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { ConnectionsServices } from '../connectionConstants';
 import { Investor } from 'src/app/Models/Investor';
 import CreateInvestor from 'src/app/Models/CreateInvestor';
+import { Template } from '@angular/compiler/src/render3/r3_ast';
 
 @Injectable({
   providedIn: 'root',
@@ -45,5 +46,12 @@ export class LoginService {
 
   storeLoggedInvestor(investor: Investor) {
     localStorage.setItem('user_info', JSON.stringify(investor));
+  }
+
+  getLoggedInvestor(): Investor {
+    let temp: any = {};
+    if (localStorage.getItem('user_info') != null)
+      temp = localStorage.getItem('user_info');
+    return JSON.parse(temp);
   }
 }

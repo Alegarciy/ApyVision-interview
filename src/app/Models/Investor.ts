@@ -3,7 +3,7 @@ export interface Investor {
   user_email: string;
   usd: number;
   lp_amount: number;
-  lp_email: string;
+  lp_name: string;
   pool_address: string;
 }
 

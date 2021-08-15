@@ -1,1 +1,91 @@
-<p>pool-dashboard works!</p>
+<div class="container">
+  <mat-card class="home-card example-card">
+    <mat-card-header>
+      <mat-card-title>Investor Profile</mat-card-title>
+    </mat-card-header>
+
+    <mat-card-content class="home-card-content">
+      <button
+        mat-fab
+        color="accent"
+        aria-label="Example icon button with a bookmark icon"
+        style="margin: 20px; width: 80px; height: 80px"
+      >
+        <mat-icon style="color: #2a2b31">face</mat-icon>
+      </button>
+      <mat-card-title>{{ this.investor.user_email }}</mat-card-title>
+      <mat-card-subtitle>Profile Information</mat-card-subtitle>
+      <mat-tab-group>
+        <!-- Profile Tab -->
+        <mat-tab label="Profile">
+          <!-- Username Email -->
+          <mat-form-field class="example-full-width" style="margin-top: 3rem">
+            <mat-label>Investor Email</mat-label>
+            <input
+              disabled
+              matInput
+              value="{{ this.investor.user_email }}"
+              #message
+              [(ngModel)]="user_email"
+            />
+          </mat-form-field>
+          <!-- Amount of Dollars -->
+          <mat-form-field class="example-full-width" style="margin-top: 3rem">
+            <mat-label>Amount of dollars</mat-label>
+            <input
+              disabled
+              matInput
+              value="${{ this.investor.usd }}"
+              #message
+              [(ngModel)]="usd"
+            />
+          </mat-form-field>
+          <!-- Type of Liquidity Pool Tokens -->
+          <mat-form-field class="example-full-width" style="margin-top: 3rem">
+            <mat-label>Amount of Liquidity Pool Tokens</mat-label>
+            <input
+              disabled
+              matInput
+              value="{{ this.investor.lp_name }}"
+              #message
+              [(ngModel)]="lp_name"
+            />
+          </mat-form-field>
+          <!-- Amount Liquidity Pool Tokens -->
+          <mat-form-field class="example-full-width" style="margin-top: 3rem">
+            <mat-label>Amount of Liquidity Pool Tokens</mat-label>
+            <input
+              disabled
+              matInput
+              value="{{ this.investor.lp_amount }}"
+              #message
+              [(ngModel)]="lp_amount"
+            />
+          </mat-form-field>
+          <!-- Pool Address -->
+          <mat-form-field class="example-full-width" style="margin-top: 3rem">
+            <mat-label>Pool Address</mat-label>
+            <input
+              disabled
+              matInput
+              value="{{ this.investor.pool_address }}"
+              #message
+              [(ngModel)]="pool_address"
+            />
+          </mat-form-field>
+
+          <!-- <button
+            mat-raised-button
+            style="width: 100%; margin-top: 0.5rem"
+            color="primary"
+            (click)="onSaveClient()"
+          >
+            Save
+          </button> -->
+        </mat-tab>
+
+        <mat-tab label="Transactions"> </mat-tab>
+      </mat-tab-group>
+    </mat-card-content>
+  </mat-card>
+</div>
