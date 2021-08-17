@@ -21,6 +21,8 @@ export class PoolDashboardComponent implements OnInit {
   /* Liquidity Pool Form */
   public liquidityPoolArray: LiquidityPool[] = [];
   public selectedPool: LiquidityPool;
+  public topInvestors: Investor[] = [];
+  public liquidityPoolMap: Map<string, LiquidityPool> = new Map();
 
   constructor(
     private loginService: LoginService,
@@ -56,6 +58,10 @@ export class PoolDashboardComponent implements OnInit {
           this.liquidityPoolArray = res.results;
           this.selectedPool = this.liquidityPoolArray[0];
           console.log(this.liquidityPoolArray);
+          this.liquidityPoolArray.forEach((pool) => {
+            this.liquidityPoolMap.set(pool.pool_address, pool);
+          });
+          this.loadTopInvestors();
         }
       },
       (err) => {
@@ -82,5 +88,47 @@ export class PoolDashboardComponent implements OnInit {
           console.log(err);
         }
       );
+  }
+
+  loadTopInvestors() {
+    this.poolsService.getInvestors().subscribe(
+      (res: Investor[]) => {
+        this.topInvestors = res.filter((investor) => investor.usd == 0);
+
+        console.log('Before sorting');
+        console.log(this.topInvestors);
+        this.topInvestors = this.sortByIncome(this.topInvestors);
+        console.log('After sorting');
+        console.log(this.topInvestors);
+      },
+      (err: any) => {
+        console.log(err);
+      }
+    );
+  }
+
+  //helper function sorting investor by their lp token => usd
+  sortByIncome(investorsArray: Investor[]): Investor[] {
+    let sortedArray: Investor[] = investorsArray.sort(
+      (investorA: Investor, investorB: Investor) => {
+        let poolConversionA: any = this.liquidityPoolMap.get(
+          investorA.pool_address
+        )?.avg_lp_price;
+        let poolConversionB: any = this.liquidityPoolMap.get(
+          investorB.pool_address
+        )?.avg_lp_price;
+        if (
+          investorA.lp_amount / poolConversionA <
+          investorB.lp_amount / poolConversionB
+        ) {
+          return 1;
+        } else {
+          console.log(investorA.lp_amount / poolConversionA);
+          console.log(investorB.lp_amount / poolConversionB);
+          return 0;
+        }
+      }
+    );
+    return sortedArray;
   }
 }

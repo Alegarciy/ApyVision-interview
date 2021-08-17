@@ -73,15 +73,6 @@
               [(ngModel)]="pool_address"
             />
           </mat-form-field>
-
-          <!-- <button
-            mat-raised-button
-            style="width: 100%; margin-top: 0.5rem"
-            color="primary"
-            (click)="onSaveClient()"
-          >
-            Save
-          </button> -->
         </mat-tab>
 
         <mat-tab label="Transactions">
@@ -148,6 +139,25 @@
           >
             Confirm
           </button>
+        </mat-tab>
+        <mat-tab label="LeaderBoard">
+          <mat-form-field
+            *ngFor="let investors of topInvestors"
+            class="example-full-width"
+            style="margin-top: 3rem"
+          >
+            <mat-label>{{ investors.user_email }}</mat-label>
+            <input
+              disabled
+              matInput
+              value="{{
+                this.investors.lp_name +
+                  ': ' +
+                  this.investors.lp_amount.toString()
+              }}"
+              #message
+            />
+          </mat-form-field>
         </mat-tab>
       </mat-tab-group>
     </mat-card-content>

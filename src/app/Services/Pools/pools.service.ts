@@ -43,4 +43,15 @@ export class PoolsService {
       }
     );
   }
+
+  getInvestors(): Observable<Investor[]> {
+    return this.httpClient.get<Investor[]>(
+      ConnectionsServices.currentConnection + '/investors',
+      {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      }
+    );
+  }
 }
